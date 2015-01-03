@@ -4,7 +4,7 @@ import 'package:angular/application_factory.dart';
 import 'package:di/annotations.dart';
 
 @Injectable()
-class Greeter{
+class Greeter {
 	String name;
 }
 
