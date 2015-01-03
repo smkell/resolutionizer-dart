@@ -2,3 +2,4 @@
 .idea
 packages
 build
+node_modules

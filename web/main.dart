@@ -1,15 +1,10 @@
 library resolutionizer;
 
 import 'package:angular/application_factory.dart';
-import 'package:di/annotations.dart';
-
-@Injectable()
-class Greeter {
-	String name;
-}
+import 'package:resolutionizer/resolutionizer.dart';
 
 void main() {
 	applicationFactory()
-		.rootContextType(Greeter)
+		.addModule(new ResolutionizerApp())
 		.run();
 }
