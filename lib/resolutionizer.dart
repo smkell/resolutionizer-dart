@@ -7,6 +7,7 @@ export 'package:resolutionizer/components/components.dart';
 
 class ResolutionizerApp extends Module {
   ResolutionizerApp() {
+    bind(RatingComponent);
     bind(RecipeBookComponent);
   }
 }
