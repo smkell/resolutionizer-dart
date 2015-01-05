@@ -1,4 +1,4 @@
-library resolutionizer_test;
+library resolutionizer.test;
 
 import 'package:unittest/unittest.dart';
 import 'package:di/di.dart';
@@ -7,6 +7,10 @@ import 'package:angular/mock/module.dart';
 import 'package:resolutionizer/resolutionizer.dart';
 
 main() {
+  testComponents();
+}
+
+void testComponents() {
   setUp(setUpInjector);
   tearDown(tearDownInjector);
 
