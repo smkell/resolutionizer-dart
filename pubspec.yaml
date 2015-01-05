@@ -13,3 +13,4 @@ transformers:
 - angular:
     html_files:
         - lib/components/recipe_book.html
+        - lib/components/rating.html

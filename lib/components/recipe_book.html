@@ -10,7 +10,7 @@
 <h3>Recipe Details</h3>
 <div><strong>Name: </strong>{{selectedRecipe.name}}</div>
 <div><strong>Category: </strong>{{selectedRecipe.category}}</div>
-<div><strong>Rating: </strong>{{selectedRecipe.rating}}</div>
+<div><strong>Rating: </strong><rating max-rating="5" rating="selectedRecipe.rating"></rating></div>
 <div>
     <ul>
         <li ng-repeat="ingredient in selectedRecipe.ingredients">
