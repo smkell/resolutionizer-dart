@@ -1,7 +1,14 @@
-language: node_js
+ language: node_js
 node_js:
-  - "0.11"
+- '0.11'
 before_install:
-  - export DISPLAY=:99.0
+- export DISPLAY=:99.0
 script:
-  - ./scripts/travis/run_tests.sh
+- ./scripts/travis/run_tests.sh
+deploy:
+  provider: heroku
+  api_key:
+    secure: jS+kZwoTj7/CJpVhocu/AR62Wn+VQeAIM+FoJPQqlCtWzEQwuIJpTE30B++5D8ikz4jG/jvdPJmGloB9Gyn/ES084kQPvFsggI7doJ/nPXjI6o5nBcZq3+MTju27enMxVQrFDir52MV6zmVIxWJ8Ljq0AMO27BOlgh2ud/14TPM=
+  app: ancient-beach-1822
+  on:
+    repo: smkell/resolutionizer-dart
