@@ -3,7 +3,11 @@
     <li class="pointer"
         ng-repeat="recipe in recipes"
         ng-click="selectRecipe(recipe)">
-        {{recipe.name}}
+        <span tooltip="tooltipForRecipe(recipe)">
+            <rating max-rating="5" rating="recipe.rating"></rating>
+            <span class="extra-space"
+                  ng-click="selectRecipe(recipe)">{{recipe.name}}</span>
+        </span>
     </li>
 </ul>
 

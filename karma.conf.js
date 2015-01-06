@@ -9,6 +9,7 @@ module.exports = function(config) {
 
         files: [
             {pattern: 'test/resolutionizer_test.dart', included: true},
+            {pattern: 'test/resolutionizerd_test.dart', included: true},
             {pattern: '**/*.dart', included: false},
             {pattern: '**/*.html', included: false}
         ],

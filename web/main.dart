@@ -1,5 +1,3 @@
-library resolutionizer;
-
 import 'package:angular/application_factory.dart';
 import 'package:resolutionizer/resolutionizer.dart';
 

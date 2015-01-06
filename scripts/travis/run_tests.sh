@@ -26,4 +26,3 @@ pub install
 sh -e /etc/init.d/xvfb start
 
 ./node_modules/karma/bin/karma start --single-run --browsers Dartium
-$DART_SDK/bin/dart ./test/resolutionizerd_test.dart
