@@ -17,3 +17,5 @@ transformers:
     html_files:
         - lib/components/recipe_book.html
         - lib/components/rating.html
+        - lib/components/search_recipe.html
+        - lib/components/view_recipe.html

@@ -4,49 +4,28 @@
     </div>
     <div ng-switch-when="true">
         <h3>Recipe List</h3>
-        <div id="filters">
-            <div>
-                <label for="name-filter">Filter recipes by name</label>
-                <input id="name-filter" type="text" ng-model="nameFilterString">
-            </div>
-            <div>
-                Filter recipes by category:
-                <span ng-repeat="category in categories">
-                    <label>
-                        <input type="checkbox" ng-model="categoryFilterMap[category]">{{category}}
-                    </label>
-                </span>
-            </div>
-            <input type="button" value="Clear Filters" ng-click="clearFilters()">
-        </div>
 
-        <div id="recipe-list">
-            <ul>
-                <li class="pointer"
-                    ng-repeat="recipe in recipes | orderBy:'name' | filter:{name:nameFilterString} | categoryFilter:categoryFilterMap"
-                    ng-click="selectRecipe(recipe)">
-                    <span tooltip="tooltipForRecipe(recipe)">
-                        <rating max-rating="5" rating="recipe.rating"></rating>
-                        <span class="extra-space"
-                              ng-click="selectRecipe(recipe)">{{recipe.name}}</span>
-                    </span>
-                </li>
-            </ul>
-        </div>
+        <nav id="controls">
+            <search-recipe name-filter-string="nameFilterString"
+                           category-filter-map="categoryFilterMap"></search-recipe>
 
-        <div id="recipe-details" ng-if="selectedRecipe != null">
-            <h3>Recipe Details</h3>
-            <div><strong>Name: </strong>{{selectedRecipe.name}}</div>
-            <div><strong>Category: </strong>{{selectedRecipe.category}}</div>
-            <div><strong>Rating: </strong><rating max-rating="5" rating="selectedRecipe.rating"></rating></div>
-            <div>
-                <ul>
-                    <li ng-repeat="ingredient in selectedRecipe.ingredients">
-                        {{ingredient | syrupFilter}}
+            <a href="/#/add"><input type="button" value="Add Recipe"></a>
+        </nav>
+
+        <nav id="search-results">
+            <div id="recipe-list">
+                <ul style="list-style-type: none;">
+                    <li ng-repeat="recipe in allRecipes | orderBy:'name' | filter:{name:nameFilterString} | categoryFilter:categoryFilterMap">
+                        <span tooltip="tooltipForRecipe(recipe)">
+                            <rating max-rating="5" rating="recipe.rating"></rating>
+                            <a class="extra-space" href="#/recipe/{{recipe.id}}/view">{{recipe.name}}</a>
+                        </span>
                     </li>
                 </ul>
             </div>
-            <div><strong>Directions: </strong>{{selectedRecipe.directions | syrupFilter | fahrenheitToCelciusFilter}}</div>
-        </div>
+        </nav>
+        <section id="details">
+            <ng-view></ng-view>
+        </section>
     </div>
 </div>

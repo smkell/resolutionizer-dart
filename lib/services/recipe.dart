@@ -1,4 +1,4 @@
-part of resolutionizer;
+part of resolutionizer.services;
 
 class Recipe {
   final String id;

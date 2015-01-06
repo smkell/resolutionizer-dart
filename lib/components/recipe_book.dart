@@ -10,27 +10,31 @@ class RecipeBookComponent {
   static const String LoadingMessage = "Loading recipe book...";
   static const String ErrorMessage = "Sorry! The cook stepped out of the kitchen and took the book with him!";
 
+  RecipeBookComponent(this._http, this.queryService) {
+    _loadData();
+  }
+
   // Loading state indicators
   String message = LoadingMessage;
   bool recipesLoaded = false;
   bool categoriesLoaded = false;
 
-  List<Recipe> recipes = [];
-  Recipe selectedRecipe;
-
   // Filter box
-  final categoryFilterMap = <String, bool>{
-  };
-
+  final categoryFilterMap = <String, bool>{};
   Iterable<String> get categories => categoryFilterMap.keys;
-
   String nameFilterString = "";
 
+  // Services
   final Http _http;
+  final QueryService queryService;
 
-  RecipeBookComponent(this._http) {
-    _loadData();
-  }
+  Map<String,Recipe> _recipeMap = {};
+  Map<String,Recipe> get recipeMap => _recipeMap;
+
+  List<Recipe> _allRecipes = [];
+  List<Recipe> get allRecipes => _allRecipes;
+
+  Recipe selectedRecipe;
 
   void selectRecipe(Recipe recipe) {
     selectedRecipe = recipe;
@@ -56,24 +60,21 @@ class RecipeBookComponent {
   }
 
   void _loadData() {
-    recipesLoaded = false;
-    categoriesLoaded = false;
-    _http.get('recipes.json')
-    .then((HttpResponse response) {
-      print(response);
-      recipes = response.data.map((d) => new Recipe.fromJson(d)).toList();
-      recipesLoaded = true;
-    })
-    .catchError((e) {
-      print(e);
-      recipesLoaded = false;
-      message = ErrorMessage;
-    });
+    queryService.getAllRecipes()
+      .then((Map<String, Recipe> allRecipes) {
+        _recipeMap = allRecipes;
+        _allRecipes = recipeMap.values.toList();
+        recipesLoaded = true;
+      })
+      .catchError((e) {
+        print(e);
+        recipesLoaded = false;
+        message = ErrorMessage;
+      });
 
-    _http.get('categories.json')
-      .then((HttpResponse response) {
-        print(response);
-        for(String category in response.data) {
+    queryService.getAllCategories()
+      .then((List<String> allCategories) {
+        for(String category in allCategories) {
           categoryFilterMap[category] = false;
         }
         categoriesLoaded = true;

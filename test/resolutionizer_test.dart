@@ -25,13 +25,13 @@ void testComponents() {
       backend.expectGET('categories.json').respond('["c1"]');
 
       var recipeBook = injector.get(RecipeBookComponent);
-      expect(recipeBook.recipes, isEmpty);
+      expect(recipeBook.allRecipes, isEmpty);
 
       microLeap();
       backend.flush();
       microLeap();
 
-      expect(recipeBook.recipes, isNot(isEmpty));
+      expect(recipeBook.allRecipes, isNot(isEmpty));
     })));
 
     test('should select recipe', async(inject((Injector injector, MockHttpBackend backend) {
@@ -40,13 +40,13 @@ void testComponents() {
       backend.expectGET('categories.json').respond('["c1"]');
 
       var recipeBook = injector.get(RecipeBookComponent);
-      expect(recipeBook.recipes, isEmpty);
+      expect(recipeBook.allRecipes, isEmpty);
 
       microLeap();
       backend.flush();
       microLeap();
 
-      var recipe = recipeBook.recipes[0];
+      var recipe = recipeBook.allRecipes[0];
       recipeBook.selectRecipe(recipe);
       expect(recipeBook.selectedRecipe, same(recipe));
     })));
