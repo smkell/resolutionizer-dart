@@ -6,11 +6,30 @@ part of resolutionizer.components;
   templateUrl: 'recipe_book.html'
 )
 class RecipeBookComponent {
+
+  static const String LoadingMessage = "Loading recipe book...";
+  static const String ErrorMessage = "Sorry! The cook stepped out of the kitchen and took the book with him!";
+
+  // Loading state indicators
+  String message = LoadingMessage;
+  bool recipesLoaded = false;
+  bool categoriesLoaded = false;
+
   List<Recipe> recipes = [];
   Recipe selectedRecipe;
 
-  RecipeBookComponent() {
-    recipes = _loadData();
+  // Filter box
+  final categoryFilterMap = <String, bool>{
+  };
+
+  Iterable<String> get categories => categoryFilterMap.keys;
+
+  String nameFilterString = "";
+
+  final Http _http;
+
+  RecipeBookComponent(this._http) {
+    _loadData();
   }
 
   void selectRecipe(Recipe recipe) {
@@ -27,43 +46,42 @@ class RecipeBookComponent {
       "so here's one of my cat instead!",
       80);
     }
-    return tooltip[recipe]; // recipe.tooltip
+    return tooltip[recipe];
+    // recipe.tooltip
   }
 
-  List<Recipe> _loadData() {
-    return [
-        new Recipe('My Appetizer','Appetizers',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 1, 'fonzie1.jpg'),
-        new Recipe('My Salad','Salads',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 3, 'fonzie2.jpg'),
-        new Recipe('My Soup','Soups',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 4, 'fonzie1.jpg'),
-        new Recipe('My Main Dish','Main Dishes',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 2, 'fonzie2.jpg'),
-        new Recipe('My Side Dish','Side Dishes',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 3, 'fonzie1.jpg'),
-        new Recipe('My Awesome Dessert','Desserts',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 5, 'fonzie2.jpg'),
-        new Recipe('My So-So Dessert','Desserts',
-        ["Ingredient 1", "Ingredient 2"],
-        "Some Directions", 3, 'fonzie1.jpg'),
-    ];
+  void clearFilters() {
+    categoryFilterMap.clear();
+    nameFilterString = "";
   }
-}
 
-class Recipe {
-  final String name;
-  final String category;
-  final List<String> ingredients;
-  final String directions;
-  final String imgUrl;
-  int rating;
+  void _loadData() {
+    recipesLoaded = false;
+    categoriesLoaded = false;
+    _http.get('recipes.json')
+    .then((HttpResponse response) {
+      print(response);
+      recipes = response.data.map((d) => new Recipe.fromJson(d)).toList();
+      recipesLoaded = true;
+    })
+    .catchError((e) {
+      print(e);
+      recipesLoaded = false;
+      message = ErrorMessage;
+    });
 
-  Recipe(this.name, this.category, this.ingredients, this.directions, this.rating, this.imgUrl);
+    _http.get('categories.json')
+      .then((HttpResponse response) {
+        print(response);
+        for(String category in response.data) {
+          categoryFilterMap[category] = false;
+        }
+        categoriesLoaded = true;
+      })
+      .catchError((e) {
+        print(e);
+        categoriesLoaded = false;
+        message = ErrorMessage;
+      });
+  }
 }

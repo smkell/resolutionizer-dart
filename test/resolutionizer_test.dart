@@ -11,25 +11,48 @@ main() {
 }
 
 void testComponents() {
-  setUp(setUpInjector);
+  setUp(() {
+    setUpInjector();
+    module((Module m) => m.install(new ResolutionizerApp()));
+  });
   tearDown(tearDownInjector);
 
   group('recipe book component', () {
-    setUp(module((Module m) => m.install(new ResolutionizerApp())));
 
-    test('should load recipes', inject((RecipeBookComponent recipeBook) {
+    test('should load recipes', async(inject((Injector injector, MockHttpBackend backend) {
+
+      backend.expectGET('recipes.json').respond('[{"name": "test1"}]');
+      backend.expectGET('categories.json').respond('["c1"]');
+
+      var recipeBook = injector.get(RecipeBookComponent);
+      expect(recipeBook.recipes, isEmpty);
+
+      microLeap();
+      backend.flush();
+      microLeap();
+
       expect(recipeBook.recipes, isNot(isEmpty));
-    }));
+    })));
 
-    test('should select recipe', inject((RecipeBookComponent recipeBook) {
+    test('should select recipe', async(inject((Injector injector, MockHttpBackend backend) {
+
+      backend.expectGET('recipes.json').respond('[{"name": "test1"}]');
+      backend.expectGET('categories.json').respond('["c1"]');
+
+      var recipeBook = injector.get(RecipeBookComponent);
+      expect(recipeBook.recipes, isEmpty);
+
+      microLeap();
+      backend.flush();
+      microLeap();
+
       var recipe = recipeBook.recipes[0];
       recipeBook.selectRecipe(recipe);
       expect(recipeBook.selectedRecipe, same(recipe));
-    }));
+    })));
   });
 
   group('rating component', () {
-    setUp(module((Module m) => m.install(new ResolutionizerApp())));
 
     test('should show the right number of stars', inject((RatingComponent rating) {
       rating.maxRating = '5';
@@ -49,6 +72,16 @@ void testComponents() {
 
       rating.handleClick(1);
       expect(rating.rating, equals(1));
+    }));
+  });
+
+  group('category filter', () {
+    test('should return subset', inject((CategoryFilter filter) {
+      var r1 = new Recipe(null, null, 'C1', null, null, null, null);
+      var r2 = new Recipe(null, null, 'C2', null, null, null, null);
+      var list = [r1, r2];
+      var map = {"C1": false, "C2": true};
+      expect(filter(list, map), equals([r2]));
     }));
   });
 }
