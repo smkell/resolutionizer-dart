@@ -42,11 +42,11 @@
             <div>
                 <ul>
                     <li ng-repeat="ingredient in selectedRecipe.ingredients">
-                        {{ingredient}}
+                        {{ingredient | syrupFilter}}
                     </li>
                 </ul>
             </div>
-            <div><strong>Directions: </strong>{{selectedRecipe.directions}}</div>
+            <div><strong>Directions: </strong>{{selectedRecipe.directions | syrupFilter | fahrenheitToCelciusFilter}}</div>
         </div>
     </div>
 </div>

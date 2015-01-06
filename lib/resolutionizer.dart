@@ -13,8 +13,10 @@ part 'recipe.dart';
 class ResolutionizerApp extends Module {
   ResolutionizerApp() {
     bind(CategoryFilter);
+    bind(FahrenheitToCelciusFilter);
     bind(RatingComponent);
     bind(RecipeBookComponent);
+    bind(SyrupFilter);
     bind(Tooltip);
   }
 }

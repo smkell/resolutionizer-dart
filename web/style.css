@@ -6,8 +6,12 @@
     padding-left: 10px;
 }
 
-#recipe-list > ul {
-    list-style-type: none;
+ul {
+    list-style: none;
+}
+
+ul li {
+    list-style: none;
 }
 
 [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

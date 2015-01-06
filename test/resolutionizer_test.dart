@@ -84,4 +84,27 @@ void testComponents() {
       expect(filter(list, map), equals([r2]));
     }));
   });
+
+  group('syrup filter', () {
+    test('should return maple syrup', inject((SyrupFilter filter) {
+      var s1  = "sugar";
+      var s2 = "powdered sugar";
+      var s3 = "Add all of the sugar to a bowl.";
+      var s4 = "Add all of the powdered sugar to a bowl.";
+
+      expect(filter(s1), equals("maple syrup"));
+      expect(filter(s2), equals("maple syrup"));
+      expect(filter(s3), equals("Add all of the maple syrup to a bowl."));
+      expect(filter(s4), equals("Add all of the maple syrup to a bowl."));
+    }));
+  });
+
+  group('fahrenheit to celcius filter', () {
+    test('should convert fahrenheit to celcius', inject((FahrenheitToCelciusFilter filter) {
+      var f1 = "300 degrees F";
+      var c1 = "150 degrees C";
+
+      expect(filter(f1), equals(c1));
+    }));
+  });
 }
