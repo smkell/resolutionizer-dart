@@ -49,8 +49,8 @@ class Tooltip {
 
     tooltipElem.style
       ..position = "absolute"
-      ..top = "${elTopRight}px"
-      ..left = "${elTopRight + 10}px";
+      ..top = "${elTopRight.y}px"
+      ..left = "${elTopRight.x + 10}px";
 
     // Add the tooltip to the document body. We add it here because we need to position it
     // absolutely, without reference to its parent element.

@@ -20,14 +20,14 @@ class RecipeBookComponent {
   // Tooltip
   static final tooltip = new Expando<TooltipModel>();
 
-  TooltipModel tooltipModelForRecipe(Recipe recipe) {
+  TooltipModel tooltipForRecipe(Recipe recipe) {
     if (tooltip[recipe] == null) {
       tooltip[recipe] = new TooltipModel(recipe.imgUrl,
       "I don't have a picture of these recipes, "
       "so here's one of my cat instead!",
       80);
     }
-    return tooltip[recipe];
+    return tooltip[recipe]; // recipe.tooltip
   }
 
   List<Recipe> _loadData() {
